@@ -107,7 +107,7 @@ class _EngineListScreenState extends State<EngineListScreen> {
               children: [
                 Expanded(
                   child: DropdownButtonFormField<String>(
-                    value: filterManufacturer ?? 'All',
+                    initialValue: filterManufacturer ?? 'All',
                     items: manufacturers.map((m) => DropdownMenuItem(value: m, child: Text(m))).toList(),
                     onChanged: (v) => setState(() => filterManufacturer = v),
                     decoration: const InputDecoration(labelText: 'Manufacturer'),
