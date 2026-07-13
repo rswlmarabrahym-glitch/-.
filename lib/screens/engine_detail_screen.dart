@@ -7,10 +7,6 @@ class EngineDetailScreen extends StatelessWidget {
 
   const EngineDetailScreen({super.key, required this.engine});
 
-  void _showSnack(BuildContext context, String text) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text)));
-  }
-
   Future<void> _call(String phone) async {
     final uri = Uri.parse('tel:$phone');
     await launchUrl(uri);
@@ -45,31 +41,33 @@ class EngineDetailScreen extends StatelessWidget {
                 Text(engine.description),
                 const SizedBox(height: 24),
                 Row(
-                  children: [
-                    Expanded(
-                      child: ElevatedButton.icon(
-                        icon: const Icon(Icons.phone),
-                        label: const Text('Call'),
-                        onPressed: () async {
-                          try {
-                            await _call(engine.phone);
-                          } catch (_) {
-                            _showSnack(context, 'Unable to place call');
-                          }
-                        },
+                    children: [
+                      Expanded(
+                        child: ElevatedButton.icon(
+                          icon: const Icon(Icons.phone),
+                          label: const Text('Call'),
+                          onPressed: () async {
+                            final messenger = ScaffoldMessenger.of(context);
+                            try {
+                              await _call(engine.phone);
+                            } catch (_) {
+                              messenger.showSnackBar(const SnackBar(content: Text('Unable to place call')));
+                            }
+                          },
+                        ),
                       ),
-                    ),
                     const SizedBox(width: 12),
                     Expanded(
                       child: ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-                        icon: const Icon(Icons.whatsapp),
+                        icon: const Icon(Icons.message),
                         label: const Text('WhatsApp'),
                         onPressed: () async {
+                          final messenger = ScaffoldMessenger.of(context);
                           try {
                             await _whatsapp(engine.phone);
                           } catch (_) {
-                            _showSnack(context, 'Unable to open WhatsApp');
+                            messenger.showSnackBar(const SnackBar(content: Text('Unable to open WhatsApp')));
                           }
                         },
                       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../data/engines.dart';
 import '../models/engine.dart';
 import '../widgets/engine_card.dart';
+import 'engine_detail_screen.dart';
 
 class EngineListScreen extends StatefulWidget {
   const EngineListScreen({super.key});
